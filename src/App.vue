@@ -1,33 +1,33 @@
 <template>
-  <div class="cards">
-    <div :key="item.id" v-for="item in data" class="card" @mouseenter="startAnime(item)" @mouseleave="endAnime(item)">
-      <div class="hero">
-        <img class="hero-image" :src="item.image" :alt="item.title">
-        <h1>{{ item.title }}</h1>
-        <div class="hero-content">
-          <h2 v-show="item.toggleText">{{ item.subtitle }}</h2>
-          <div class="stars">
-            <Icon icon="teenyicons:star-solid" width="30" height="30" style="color: #ef0b0b" />
-            <Icon icon="teenyicons:star-solid" width="30" height="30" style="color: #ef0b0b" />
-            <Icon icon="teenyicons:star-solid" width="30" height="30" style="color: #ef0b0b" />
-            <Icon icon="teenyicons:star-solid" width="30" height="30" style="color: #ef0b0b" />
-            <Icon icon="teenyicons:star-solid" width="30" height="30" style="color: #ef0b0b" />
+  <div class="body" ref="gobalBody">
+    <div class="cards">
+      <div :key="item.id" v-for="item in data" class="card" @mouseenter="startAnime(item)" @mouseleave="endAnime(item)">
+        <div class="hero" :style="{ backgroundImage: 'url(' + item.image + ')' }">
+          <h1>{{ item.title }}</h1>
+          <div class="hero-content">
+            <h2 v-show="item.toggleText">{{ item.subtitle }}</h2>
+            <div class="stars">
+              <Icon icon="teenyicons:star-solid" width="30" height="30" style="color: #ef0b0b" />
+              <Icon icon="teenyicons:star-solid" width="30" height="30" style="color: #ef0b0b" />
+              <Icon icon="teenyicons:star-solid" width="30" height="30" style="color: #ef0b0b" />
+              <Icon icon="teenyicons:star-solid" width="30" height="30" style="color: #ef0b0b" />
+              <Icon icon="teenyicons:star-solid" width="30" height="30" style="color: #ef0b0b" />
+            </div>
           </div>
         </div>
-      </div>
-      <h2 v-show="!item.toggleText" class="nav-text">{{ item.subtitle }}</h2>
-      <div class="nav">
-        <p>details</p>
-        <p>memories</p>
+        <h2 v-show="!item.toggleText" class="nav-text">{{ item.subtitle }}</h2>
+        <div class="nav">
+          <p>details</p>
+          <p>memories</p>
+        </div>
       </div>
     </div>
+    <h1 class="header">Let’s get Lost</h1>
   </div>
-  <h1 class="header">Let’s get Lost</h1>
 </template>
 
 <script>
 import { Icon } from '@iconify/vue';
-
 
 export default {
   name: 'App',
@@ -47,15 +47,26 @@ export default {
   methods: {
     startAnime(item) {
       item.toggleText = !item.toggleText
+
+      this.$refs.gobalBody.style.backgroundImage = `url(${item.image})`;
+
+
     },
     endAnime(item) {
-      item.toggleText = !item.toggleText
+      item.toggleText = !item.toggleText;
+
+      this.$refs.gobalBody.style.backgroundImage = `none`;
     }
   }
 }
 </script>
 
 <style>
+body {
+  width: 100%;
+  height: 100vh;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -63,7 +74,17 @@ export default {
   color: #444;
   margin-top: 60px;
   width: 100%;
+  height: 100%;
 }
+
+.body {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+
 
 .header {
   font-size: 12rem;
@@ -108,9 +129,6 @@ export default {
 }
 
 .hero-image {
-  position: absolute;
-  z-index: -1;
-
   width: 100%;
   height: 100%;
 }
